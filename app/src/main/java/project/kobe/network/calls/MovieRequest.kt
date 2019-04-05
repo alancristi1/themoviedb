@@ -2,8 +2,10 @@ package project.kobe.network.calls
 
 import android.content.Context
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.agrawalsuneet.dotsloader.loaders.TrailingCircularDotsLoader
 import com.squareup.picasso.Picasso
 import project.kobe.R
 import project.kobe.model.Movie
@@ -22,8 +24,9 @@ object MovieRequest {
         txtNomeDatails: TextView,
         txtGenreDetails: TextView,
         txtOverview: TextView,
-        txtReleaseDetails: TextView
-    ){
+        txtReleaseDetails: TextView,
+        progress: TrailingCircularDotsLoader
+        ){
         val call = RetrofitInitializer().MovieService().getInfoMovie(id, context.getString(R.string.aṕi_key))
         call.enqueue(object : Callback<Movie>{
 
@@ -47,10 +50,13 @@ object MovieRequest {
                 txtOverview.append(response.body()!!.overview)
 
                 txtReleaseDetails.append(response.body()!!.releaseDate)
+
+                progress.visibility = View.GONE
             }
 
             override fun onFailure(call: Call<Movie>, t: Throwable) {
                 Log.i("log failure", t.message)
+                progress.visibility = View.GONE
             }
 
         })
