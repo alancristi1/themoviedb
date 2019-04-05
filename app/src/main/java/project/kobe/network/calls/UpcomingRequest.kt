@@ -19,10 +19,11 @@ object UpcomingRequest {
     fun requestUpcoming(
         context: Context,
         list: RecyclerView,
+        page : Int,
         progress: TrailingCircularDotsLoader
     ){
 
-        val call = RetrofitInitializer().MovieService().listUpcoming(context.getString(R.string.aṕi_key))
+        val call = RetrofitInitializer().MovieService().listUpcoming(context.getString(R.string.aṕi_key), page)
 
         call.enqueue(object : Callback<UpcomingMovie> {
             override fun onResponse(call: Call<UpcomingMovie>, response: Response<UpcomingMovie>) {
@@ -38,6 +39,7 @@ object UpcomingRequest {
 
             override fun onFailure(call: Call<UpcomingMovie>, t: Throwable) {
                 Log.i("log failure", t.message)
+                progress.visibility = View.GONE
             }
 
         })

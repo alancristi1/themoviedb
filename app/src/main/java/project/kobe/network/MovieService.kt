@@ -11,7 +11,8 @@ import retrofit2.http.Query
 interface MovieService {
 
     @GET("movie/upcoming")
-    fun listUpcoming(@Query("api_key") key: String) : Call<UpcomingMovie>
+    fun listUpcoming(@Query("api_key") key: String,
+                     @Query("page") page : Int) : Call<UpcomingMovie>
 
     @GET("genre/movie/list")
     fun getListGenre(@Query("api_key") key : String) : Call<Genre>
